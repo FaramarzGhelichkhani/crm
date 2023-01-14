@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-700 body-font overflow-hidden" dir="ltr">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <div class="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+            <h2 class="text-sm title-font text-gray-500 tracking-widest">کارشناس</h2>
+            <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ agent.id }}</h1>
+            <div class="flex mb-4" dir="rtl">
+                <a href="{% url 'agents:agent-detail' agent.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
+                    پروفایل
+                </a>
+                <a href="{% url 'agents:agent-update' agent.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                   مشخصات
+                </a>    
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ agent.first_name }} {{ agent.last_name }}</span>
+                <span class="ml-auto text-gray-900">نام</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2"> 
+                <span class="text-gray-500">{{ total_lead_number }}</span>
+                <span class="ml-auto text-gray-900"> تعداد کل سفارش های ارجاع داده شده</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2"> 
+                <span class="text-gray-500">{{ total_sucess_lead_number }}</span>
+                <span class="ml-auto text-gray-900"> تعداد سفارش ها موفق</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ grade_avg }}</span>
+                <span class="ml-auto text-gray-900">امتیاز عملکرد</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ total_transaction }}</span>
+                <span class="ml-auto text-gray-900">جمع اجرت دریافتی</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ total_commisions }}</span>
+                <span class="ml-auto text-gray-900">جمع کمیسیون</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ total_deposite }}</span>
+                <span class="ml-auto text-gray-900">جمع واریزی</span>
+            </div>
+            <div class="flex border-t border-gray-300 py-2">
+                <span class="text-gray-500">{{ bedehi }}</span>
+                <span class="ml-auto text-gray-900">بدهی</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

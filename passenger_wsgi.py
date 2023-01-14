@@ -1,0 +1,1 @@
+from djcrm.wsgi import application

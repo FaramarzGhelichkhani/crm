@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+
+<section class="text-gray-700 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <div class="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+            <h2 class="text-sm title-font text-gray-500 tracking-widest">خرجکرد</h2>
+            <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ expends.id }}</h1>
+            <div class="flex mb-4">
+    
+            </div>
+            <form form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md"> ثبت تغییرات</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
