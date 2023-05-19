@@ -8,7 +8,7 @@
         {% if not request.user.is_authenticated %}
           <a href="{% url 'signup' %}" class="mr-5 hover:text-gray-900">Signup</a>
           {% endif %}
-      {% comment %}{% if request.user.is_organisor %} {% endif %} {% endcomment %}
+    {% if request.user.is_authenticated and request.user.is_staff and request.user.is_active %}
           <a href="{% url 'agents:agent-list' %}" class="mr-5 hover:text-gray-900">کارشناس ها</a>
          
           <a href="{% url 'leads:lead-list' %}" class="mr-5 hover:text-gray-900">سفارش ها</a>
@@ -17,11 +17,10 @@
 
           <a href="{% url 'company:expend-list' %}" class="mr-5 hover:text-gray-900">مخارج</a>
 
-          <a href="{% url 'messeges-list' %}" class="mr-5 hover:text-gray-900">پیامک ها</a>
 
           <a href="{% url 'leads:lead-create' %}" class="mr-5 text-gray-900 hover:text-blue-900" >
-             +سفارش جدید
-        </a>
+             +سفارش جدید </a>
+        {% endif %}
       </nav>
       
       {% if request.user.is_authenticated %}
@@ -32,7 +31,6 @@
                 <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
         </a>
-        <a href="{% url 'dashboard' %}" class="mr-5 hover:text-gray-900"> داشبورد</a>
       {% else %}
       <a href="{% url 'login' %}" class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
           ورود

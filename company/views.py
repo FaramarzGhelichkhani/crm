@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .forms import *
 from .models import *
-from leads.views import get_created_jalali
+from Order.crm_views import get_created_jalali
 
 class ExpendListView(LoginRequiredMixin,generic.ListView):# 
     template_name = "Expends/expend_list.html"

@@ -11,17 +11,16 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView
 )
 from django.urls import path, include
-from leads.views import ( LandingPageView, DashboardView , TransactionListView, TransactionCreateView, TransactionUpdateView
- , TransactionDeleteView, SignupView, MessegesListView)#landing_page
+from Order.crm_views import ( LandingPageView, DashboardView , TransactionListView, TransactionCreateView, TransactionUpdateView
+ , TransactionDeleteView, SignupView )#landing_page
 
 urlpatterns = [
     path('crm/motor/admin/', admin.site.urls),
     path('crm/motor/', LandingPageView.as_view(), name='landing-page'),
     path('crm/motor/dashboard/', DashboardView.as_view(), name='dashboard'),
-    # path("dashboard/", include(django_sql_dashboard.urls)),
-    path('crm/motor/leads/',  include('leads.urls', namespace="leads")),
-    path('crm/motor/Messeges/',  MessegesListView.as_view(), name="messeges-list"),
-    path('crm/motor/agents/',  include('agents.urls', namespace="agents")),
+    path('crm/motor/leads/',  include('Order.urls', namespace="leads")),
+    # path('crm/motor/Messeges/',  MessegesListView.as_view(), name="messeges-list"),
+    path('crm/motor/agents/',  include('EmdadUser.urls', namespace="agents")),
     path('crm/motor/company/',  include('company.urls', namespace="company")),
     path('crm/motor/transactions/', TransactionListView.as_view(), name='transactions-list'),
     # path('transactions/create/', TransactionCreateView.as_view(), name='transactions-create'),

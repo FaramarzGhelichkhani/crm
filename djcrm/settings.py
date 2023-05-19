@@ -1,12 +1,12 @@
 from pathlib import Path
 import os
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = '12345'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['alocomputers.ir','www.alocomputers.ir']
+ALLOWED_HOSTS = ['alocomputers.ir','www.alocomputers.ir', '*']
 
 # Application definition
 
@@ -27,9 +27,13 @@ INSTALLED_APPS = [
     'theme',
 
     # Local apps
-    'leads',
-    'agents',
+    # 'leads',
+    # 'agents',
     'company',
+    'Order',
+    'Emdad',
+    'EmdadUser',
+    'Transaction',
     #multi selected
     'multiselectfield',
     # jalali date
@@ -102,7 +106,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djcrm.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

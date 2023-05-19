@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="text-gray-700 body-font">
+        <div class="container px-5 py-24 mx-auto flex flex-wrap">
+            <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200" dir="ltr">
+                <div>
+                    <h1 class="text-2xl text-gray-800"></h1>
+                </div>
+                <div>
+                    <a class="text-gray-500 hover:text-blue-500"   href="{% url 'agents:agent-user-create' %}">ثبت کاربر جدید</a>
+                </div>
+                <div>
+                    <a class="text-gray-500 hover:text-blue-500"   href="{% url 'agents:agent-create' %}">ثبت کارشناس جدید</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 نام کارشناس
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                شماره موبایل
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    وضعیت 
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    بدهی
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only"></span>
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for agent in object_list %}
+                                <tr class="bg-white"  {% if agent.balance > 0 %}  style="background-color:rgb(238, 157, 157)" {%endif%}>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{ agent.user_id.full_name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ agent.user_id.phone }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ agent.activation_status }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ agent.balance }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'agents:agent-leads-list' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
+                                            سفارش ها
+                                        </a>
+                                    </td>
+                          
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'agents:agent-transactions-list' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
+                                            تراکنش ها
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'agents:agent-detail' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
+                                            پروفایل
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'agents:agent-transactions-create' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
+                                            واریز+
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+
+                            <p>هیج کارشناسی وحود ندارد</p>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+      </section>
+{% endblock content %}

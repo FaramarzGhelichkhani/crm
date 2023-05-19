@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-700 body-font">
+    <div class="flex-grow">
+        {% for status in status%}
+        <h3 class="text-gray-300" style="font-size: 14px;" dir="ltr" >
+            <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-list' status %}">
+                {{status}}
+            </a> 
+        </h3>
+        {%endfor%}
+    </div>
+    <form method="get" class="form-inline my-2 my-lg-0 mt-5" dir="rtl" >
+        <button type='submit' class=" text-white bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded-md" >
+            جستجو
+        </button>
+        <input class="form-control mr-sm-2" type="search" name="q" placeholder="شماره موبایل" style="border: 0.5px solid;">
+
+    </form>
+    <!-- px-5 py-24 -->
+    <div class="container  mx-auto flex flex-wrap">
+        <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
+            {% comment %}<!-- <div>
+                <h1 class="text-4xl text-gray-800">Leads</h1>
+                <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:category-list' %}">
+                    View categories
+                </a>
+            </div> -->
+            <!-- {% if request.user.is_organisor %} -->
+            {% endcomment %}
+            <div>
+                <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-create' %}">
+                    ایجاد سفارش جدید
+                </a>
+            </div>
+            <div>
+                <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-list-today' %}">
+                    سفارش های امروز
+                </a>
+            </div>
+            <!-- {#{% endif %}#} -->
+        </div>
+
+        <div class="flex flex-col w-full">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-100">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            شماره سفارش
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            زمان
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            نام مشتری
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            شماره مشتری
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            آدرس
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            مشکل
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            تکنسین
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            وضعیت سفارش
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lead in leads %}
+                            <tr class="bg-white">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    <a class="text-blue-500 hover:text-blue-800" href="{% url 'leads:lead-detail' lead.pk %}">{{ lead.id }}</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.time }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.customer_full_name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.customer_phone }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.address }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {% for service in lead.services.all %}
+                                        {{ service.name }}
+                                    {% endfor %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.technecian }}
+                                </td>
+                            </td>
+                            {% if lead.status ==  'در حال انجام' %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(233, 222, 157)">
+                                {{ lead.status }}
+                            </td>
+                            {% elif  lead.status == 'انجام شد' %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(157, 233, 189)">
+                                {{ lead.status }}
+                            </td>
+                            {% else %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ lead.status }}
+                            </td>
+                            {%endif%}
+
+                
+                            </tr>
+
+                        {% empty %}
+
+                        <p>هیچ سفارشی وجود ندارد</p>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            </div>
+            </div>
+        </div>
+        
+        {% if unassigned_leads.exists %}
+            <div class="mt-5 flex flex-wrap -m-4">
+                <div class="p-4 w-full">
+                    <h1 class="text-2xl text-gray-800">سفارش های بدون تکنسین</h1>
+                </div>
+                {% for lead in unassigned_leads %}
+                <div class="p-4 lg:w-1/2 md:w-full">
+                    <div class="flex border-2 rounded-lg border-gray-200 p-8 sm:flex-row flex-col">
+                        <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-8 h-8" viewBox="0 0 24 24">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                <a class="text-blue-500 hover:text-blue-800" href="{% url 'leads:lead-detail' lead.pk %}">{{ lead.id }}</a>
+                            </td>
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+                                {{ lead.customer_full_name }}
+                            </h2>
+                            <p class="leading-relaxed text-base">
+                                {% for service in lead.fields.services.queryset %}
+                                    {{ service.name }}
+                                {% endfor %}
+                            </p>
+                            <p class="leading-relaxed text-base">
+                                {{ lead.address }}
+                            </p>
+                            <a href="{% url 'leads:assign-agent' lead.pk %}" class="mt-3 text-indigo-500 inline-flex items-center">
+                                ارجاع به تکنسین
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if thresoldleads.exists %}
+        <div class="mt-5 flex flex-wrap -m-4">
+            <div class="p-4 w-full">
+                <h1 class="text-2.5xl text-gray-800">سفارش های در آستانه کنسلی</h1>
+            </div>
+            {% for lead in thresoldleads %}
+            <div class="p-4 lg:w-1/2 md:w-full">
+                <div class="flex border-2 rounded-lg border-gray-200 p-8 sm:flex-row flex-col">
+                    <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-8 h-8" viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </div>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <a class="text-blue-500 hover:text-blue-800" href="{% url 'leads:lead-detail' lead.pk %}">{{ lead.id }}</a>
+                    </td>
+                    <div class="flex-grow">
+                        <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+                            {{ lead.customer_full_name }}
+                        </h2>
+                        <p class="leading-relaxed text-base">
+                            {{ lead.services }}
+                        </p>
+                        <p class="leading-relaxed text-base">
+                            {{ lead.address }}
+                        </p>
+                        <a href="{% url 'leads:assign-agent' lead.pk %}" class="mt-3 text-indigo-500 inline-flex items-center">
+                            تغییر وضعیت
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+</section>
+{% endblock content %}

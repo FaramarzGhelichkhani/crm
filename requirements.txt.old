@@ -59,3 +59,6 @@ whitenoise==5.2.0
 yarl==1.8.2
 zeep==4.2.1
 zipp==3.6.0
+
+djangorestframework==3.14.0
+django-phonenumber-field==7.0.0
