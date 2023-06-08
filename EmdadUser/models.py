@@ -10,7 +10,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     raw_password =  models.CharField(' گذرواژه خام',max_length=6)
     first_name 	= models.CharField('نام',max_length=100)
     last_name 	= models.CharField('نام خانوادگی',max_length=100) 
-    phone       = models.CharField('شماره تماس',max_length=11)
+    phone       = models.CharField('شماره تماس',max_length=11, unique=True)
     email       = models.EmailField('ایمیل',blank=True,null=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_staff    = models.BooleanField(default=False)  
@@ -49,12 +49,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"{self.first_name} {self.last_name}"
     
 
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Check if it's a new user
-            password = generate_password(6)
-            self.raw_password = password
-            self.set_password(password)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:  # Check if it's a new user
+    #         password = generate_password(6)
+    #         self.raw_password = password
+    #         self.set_password(password)
+    #     super().save(*args, **kwargs)
         
 
 
@@ -64,7 +64,7 @@ def Technecian_handle_upload(instance,filename):
     return f"Technecian_files/Tec_{pk}/{filename}"
 
 class Technecian(models.Model):
-    user_id    = models.ForeignKey(CustomUser, on_delete=models.PROTECT, verbose_name = 'کاربر')
+    user_id    = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, verbose_name = 'کاربر')
     id_card    = models.CharField('کد ملی',max_length=10, null=True,blank=True)
     address    = models.CharField('آدرس',max_length=320)
     commission = models.FloatField('کارمزد',default=0.2)

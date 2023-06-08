@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser, Technecian
-from phonenumber_field.serializerfields import PhoneNumberField
 from django.contrib.auth.hashers import check_password
 from .serializers import UserSerializer
 from django.shortcuts import get_object_or_404
@@ -15,7 +14,6 @@ def validate_credentials(request):
             body = request.body.decode('utf-8')
             data = json.loads(body)
             phone = data.get('phone')
-            phone = PhoneNumberField().to_internal_value(phone)
             password = data.get('password')
             user = Technecian.objects.get(user_id__phone=phone)
             

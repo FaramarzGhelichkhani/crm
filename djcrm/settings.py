@@ -1,12 +1,12 @@
 from pathlib import Path
 import os
 
-DEBUG = True
+DEBUG = False
 SECRET_KEY = '12345'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['alocomputers.ir','www.alocomputers.ir', '*']
+ALLOWED_HOSTS = ['alocomputers.ir','www.alocomputers.ir', '*','192.168.1.137']
 
 # Application definition
 
@@ -164,7 +164,7 @@ MEDIA_ROOT = "media_root"
 STATIC_ROOT = "static_root"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# AUTH_USER_MODEL = 'leads.User'
+AUTH_USER_MODEL = 'EmdadUser.CustomUser'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = "/crm/motor/leads"
 # LOGIN_URL = "/login"
@@ -174,6 +174,11 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = 'tailwind'
 # CRISPY_ALLOWED_TEMPLATE_PACKS ='humanize'
 # CRISPY_TEMPLATE_PACK ='humanize'
+
+AUTHENTICATION_BACKENDS = [
+    'EmdadUser.backends.CustomUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -191,6 +196,7 @@ if not DEBUG:
 
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
  
+
 
 
 LOGGING = {

@@ -30,4 +30,13 @@ class UserModelForm(forms.ModelForm):
         fields = (
 'phone','first_name','last_name',
 
-        )        
+        )     
+
+
+class reciptForm(forms.ModelForm):
+    start_date_offset = forms.IntegerField(label='روز شروع')
+    end_date_offset = forms.IntegerField(label='روز پایان')  
+
+    class Meta:
+        model = CustomUser
+        fields =  ('start_date_offset', 'end_date_offset',)

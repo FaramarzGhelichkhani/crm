@@ -12,7 +12,7 @@ class Service(models.Model):
         (STATUS_deactive, "غیرفعال"),
     )
     activation_status = models.IntegerField('وضعیت',choices=status_choices, default = 1)
-    technecians = models.ManyToManyField(Technecian)
+    technecians = models.ManyToManyField(Technecian, null=True, blank=True)
     comment    = models.TextField('توضیحات',null=True, blank=True)
 
     class Meta:
@@ -33,7 +33,7 @@ class Region(models.Model):
         (STATUS_deactive, "غیرفعال"),
     )
     activation_status = models.IntegerField('وضعیت',choices=status_choices, default = 1)
-    technecians = models.ManyToManyField(Technecian)
+    technecians = models.ManyToManyField(Technecian,  null=True, blank=True)
     
     class Meta:
         verbose_name = 'مناطق تحت پوشش'
@@ -56,14 +56,14 @@ class Motor(models.Model):
         (CARBURETOER, "کاربراتور"),
     )
     engine_type = models.IntegerField('نوع موتور',choices=status_choices, default = 1)
-    technecians = models.ManyToManyField(Technecian)
+    technecians = models.ManyToManyField(Technecian,  null=True, blank=True)
       
     class Meta:
         verbose_name = 'موتور'
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f"{self.brand} {self.model}" 
+        return f"{self.brand}" 
 
 class Product(models.Model):
     name = models.CharField('نام قطعه',max_length=150)

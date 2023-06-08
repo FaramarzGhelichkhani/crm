@@ -7,8 +7,8 @@ from django.shortcuts import reverse
 from Order.models import Order
 from Transaction.models import Transaction
 from .models import Technecian
-from .forms import AgentModelForm, UserModelForm
-from django.db.models import Avg, Sum
+from .forms import AgentModelForm, UserModelForm, reciptForm
+from django.db.models import Avg, Sum, Q
 from Order.crm_views import get_created_jalali
 from jalali_date import datetime2jalali,date2jalali
 
@@ -43,10 +43,13 @@ class AgentDetailView(LoginRequiredMixin,generic.DetailView): #OrganisorAndLogin
     def get_queryset(self):
         return Technecian.objects.all()
 
+
+
     def get_context_data(self, **kwargs):
         context = super(AgentDetailView, self).get_context_data(**kwargs)
         agent = Technecian.objects.get(id = self.kwargs["pk"] )
         leads = Order.objects.filter(technecian__id=self.kwargs["pk"])
+        
         total_lead_number =  leads.count()
         total_sucess_lead_number =  Order.objects.filter(technecian__id=self.kwargs["pk"],status="انجام شد").count()
         grade_avg = Order.objects.filter(technecian__id=self.kwargs["pk"],status="انجام شد").aggregate(Avg('grade'))
@@ -56,9 +59,9 @@ class AgentDetailView(LoginRequiredMixin,generic.DetailView): #OrganisorAndLogin
         
         total_deposit = 0 if  total_transaction_deposit['Transaction_amount__sum'] is None else total_transaction_deposit['Transaction_amount__sum'] 
         
-        total_wage = leads.aggregate(Order_wage__sum=Sum('wage'))
-        total_wage = 0 if  total_wage['Order_wage__sum'] is None else total_wage['Order_wage__sum']
-        total_commisions = int(total_wage * agent.commission)
+        total_wage = leads.aggregate(Order_wage__sum=Sum('wage'))["Order_wage__sum"]
+        total_commisions = leads.aggregate(Order_com__sum=Sum('commission'))
+        total_commisions = 0 if  total_commisions['Order_com__sum'] is None else total_commisions['Order_com__sum']
 
    
         bedehi = total_commisions - total_deposit 
@@ -102,38 +105,116 @@ class AgentDeleteView(LoginRequiredMixin,generic.DeleteView): #OrganisorAndLogin
         # organisation = self.request.user.userprofile
         return Technecian.objects.all()
 
-class RecepieListView(LoginRequiredMixin,generic.ListView):# LoginRequiredMixin
+
+class MakeRecepieListView(LoginRequiredMixin,generic.FormView):
+    template_name = "agents/agent_make_recipe.html"
+    form_class = reciptForm
+
+   
+
+    def get_success_url(self):
+        gt = self.request.POST.get('start_date_offset')
+        lt = self.request.POST.get('end_date_offset')
+        return reverse("agents:agent-lead-list-transactions",
+                kwargs={'pk':self.kwargs["pk"],'gt':gt,'lt':lt})
+
+def get_created_jalali_recip(obj):
+	    return datetime2jalali(obj.time).strftime('14%y/%m/%d')
+
+class RecepieListView(LoginRequiredMixin, generic.ListView):# LoginRequiredMixin
     template_name = "agents/agent_lead_recipe.html"
     context_object_name = "leads"
+    
+    def update_balance(self,agent_id,max_date=None):
 
+        if max_date is None:
+            leads = Order.objects.filter(technecian__id=agent_id)
+            transactions = Transaction.objects.filter(technician__id=agent_id)
+        else:  
+            transactions = Transaction.objects.filter(technician__id=agent_id,time__lt = max_date)
+            leads = Order.objects.filter(technecian__id=agent_id,time__lt = max_date)  
+                    
+        agent = Technecian.objects.get(id = agent_id )
+
+        total_transaction_deposit = transactions.aggregate(Transaction_amount__sum=Sum('amount'))
+        
+        total_deposit = 0 if  total_transaction_deposit['Transaction_amount__sum'] is None else total_transaction_deposit['Transaction_amount__sum'] 
+        
+        total_commisions = leads.aggregate(Order_com__sum=Sum('commission'))
+        total_commisions = 0 if  total_commisions['Order_com__sum'] is None else total_commisions['Order_com__sum']
+
+   
+        bedehi = total_commisions - total_deposit 
+        
+        if max_date is None:
+            agent.balance = bedehi
+            agent.save()
+        
+        return bedehi
+    
+    
+    def get_date_offset(self,offset):
+        from datetime import datetime, timedelta, time
+        today = datetime.now()
+        date = today - timedelta(days=int(offset))
+        return datetime.combine(date.date(), time.min)
+    
     def get_queryset(self):
         agentid  = self.kwargs["pk"]
-        queryset = Order.objects.filter(status="انجام شد",
-        agent__id=agentid
-        ).extra(select={'com': 0}).order_by('-time')
-        for lead in queryset:
-            lead.time = get_created_jalali(lead) 
-            com = (0 if lead.total_price_agent is None else lead.total_price_agent)* lead.technecian.commission
-            lead.com = int(com)
-        return queryset  
+        order_queryset = Order.objects.filter(
+        Q(status="انجام شد")&
+        Q(technecian__id=agentid) &
+        Q(time__gte=self.get_date_offset(self.kwargs["gt"]))
+        &
+        Q(time__lte=self.get_date_offset(self.kwargs["lt"]))
+        )\
+        .order_by('time')
+        
+        for lead in order_queryset:
+            lead.time = get_created_jalali_recip(lead)
+        
+        return order_queryset 
 
     def get_context_data(self, **kwargs):
+        order_queryset  = self.get_queryset() 
         context = super(RecepieListView, self).get_context_data(**kwargs)
         agentqueryset = Technecian.objects.get(id=self.kwargs["pk"])
         
-        leads = Order.objects.filter(technecian__id=self.kwargs["pk"])
-        total_commisions = leads.aggregate(tot_com=Sum('wage'))
-
+        transaction_quetyset = Transaction.objects.filter(
+        Q(technician=agentqueryset.id) &
+        Q(time__gte=self.get_date_offset(self.kwargs["gt"]))
+        &
+        Q(time__lte=self.get_date_offset(self.kwargs["lt"]))
+        )
         
-        total_transaction = Transaction.objects.filter(technician__id=self.kwargs["pk"])\
-        .aggregate(Sum('amount'))
+        for trans in transaction_quetyset:
+            trans.time = get_created_jalali_recip(trans)
+
+
+        total_wages = order_queryset.aggregate(tot_com=Sum('wage'))
+        total_commisions = order_queryset.aggregate(Order_com__sum=Sum('commission'))
+        
+        total_transaction = transaction_quetyset.aggregate(Sum('amount'))
 
         total_tr = 0 if  total_transaction['amount__sum'] is None else total_transaction['amount__sum'] 
-        total_com = 0 if total_commisions["tot_com"] is None else int(total_commisions["tot_com"])
+        total_wage = 0 if total_wages["tot_com"] is None else int(total_wages["tot_com"])
+        total_commisions = 0 if  total_commisions['Order_com__sum'] is None else total_commisions['Order_com__sum']
+
+        bedehi = total_commisions - total_tr
+        total_bedehi = self.update_balance(agentqueryset.id, max_date=None)
+        initial_bedehi = self.update_balance(agentqueryset.id,max_date= self.get_date_offset(self.kwargs["gt"]))
+        
         context.update({
+                "from": self.get_date_offset(self.kwargs["gt"]),
+                "to":self.get_date_offset(self.kwargs["lt"]),
                 "agent": agentqueryset,
+                "transactions": transaction_quetyset,
+                "total_wage":total_wage,
                 "total_tr": total_tr,
-                "total_commisions":total_com
+                "total_commisions":total_commisions,
+                "bedehi": bedehi,
+                "initial_bedehi": initial_bedehi,
+                "total_bedehi": total_bedehi
             })
         return context 
 

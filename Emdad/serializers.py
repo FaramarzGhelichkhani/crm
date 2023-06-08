@@ -24,7 +24,7 @@ class MotorSerializer(serializers.ModelSerializer):
         fields = []
     
     def to_representation(self, value):
-        return  value.brand + ' ' + value.model
+        return  value.brand
 
 class MotorListSerializer(serializers.ModelSerializer):  
       
@@ -35,7 +35,7 @@ class MotorListSerializer(serializers.ModelSerializer):
     def to_representation(self, value):
         return {
             'id': value.id,
-            'name': value.brand + ' ' + value.model,
+            'name': value.brand ,
         }
 
 class ProductSerializer(serializers.ModelSerializer):  

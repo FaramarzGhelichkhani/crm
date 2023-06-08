@@ -12,7 +12,6 @@ from company.models import Expend
 from datetime import date
 from jalali_date import datetime2jalali
 from django.db.models import Avg, Sum ,Q
-# from .sms.script import send_messege_to_customer, send_messege_to_technician,
 from Transaction.forms import TransactionFormModel
 from .forms import (
     OrderModelForm, 
@@ -51,12 +50,12 @@ class DashboardView(LoginRequiredMixin,generic.TemplateView):
         # leads stats
         total_lead_count = Order.objects.all().count()
         total_done = Order.objects.filter(status="انجام شد").count()
-        total_cancel = Order.objects.filter(status= "کنسل"  ).count()
+        total_cancel = Order.objects.filter(status= "کنسلی قطعی"  ).count()
         total_wage = Order.objects.filter(status="انجام شد").aggregate(total_wage=Sum('wage'))
         total_income = Transaction.objects.aggregate(total_income=Sum('amount'))
         # commssions
         total_commisions = 0 
-        for row in Order.objects.values('technecian').annotate(sumwage=Sum('wage')):
+        for row in Order.objects.exclude(technecian__isnull=True).values('technecian').annotate(sumwage=Sum('wage')):
             tech = Technecian.objects.get(pk=row['technecian'])
             total_commisions += row['sumwage'] * tech.commission
 
@@ -74,12 +73,13 @@ class DashboardView(LoginRequiredMixin,generic.TemplateView):
 
         total_cancel_in_today=Order.objects.filter(
             time__gte= today  ,
-            status= "کنسل"
+            status= "کنسلی قطعی"
         ).count()    
         
         total_wage_today = Order.objects.filter(time__gte= today).aggregate(tot=Sum('wage'))
         total_commisions_today = 0 
-        for row in Order.objects.filter(time__gte= today).values('technecian').annotate(sumwage=Sum('wage')):
+        for row in Order.objects.filter(time__gte= today).exclude(technecian__isnull=True).values('technecian').annotate(sumwage=Sum('wage')):
+            print(row)
             tech = Technecian.objects.get(pk=row['technecian'])
             total_commisions_today += row['sumwage'] * tech.commission
         
@@ -160,7 +160,7 @@ class TodayLeadListView(LoginRequiredMixin,generic.ListView):# LoginRequiredMixi
                 technecian__isnull=True,
                  time__year=today.year, time__month=today.month,
                  time__day=today.day
-            ).exclude(status = 'کنسل')
+            ).exclude(status = 'کنسلی قطعی')
         thresoldleads =  Order.objects.filter(status="در آستانه کنسلی" ,  
         time__year=today.year, time__month=today.month, time__day=today.day)    
         status =[]
@@ -201,7 +201,7 @@ class LeadListView(LoginRequiredMixin,generic.ListView):# LoginRequiredMixin
         if not self.kwargs.get("pk"):
             agentqueryset = Order.objects.filter(
                     technecian_id__isnull=True
-                ).exclude(status = 'کنسل')
+                ).exclude(status = 'کنسلی قطعی')
             thresoldleads =  Order.objects.filter(status="در آستانه کنسلی" )    
             status = [  
             ]

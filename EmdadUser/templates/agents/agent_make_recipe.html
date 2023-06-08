@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+
+<div class="max-w-lg mx-auto">
+
+    <div class="py-5 border-b border-gray-200">
+        <a class="hover:text-blue-500" href="{% url 'agents:agent-list' %}">برگشت به صفحه قبل</a>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="py-5 border-b border-gray-200">
+            صفر یعنی امروز . یک یعنی یک روز قبل و به همین ترتیب
+        </div>
+        <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">درخواست</button>
+    </form>
+
+</div>
+{% endblock content %}

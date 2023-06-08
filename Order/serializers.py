@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Order, Order_Product
 from Emdad.serializers import ServiceNameSerializer, MotorSerializer
+from jalali_date import datetime2jalali
 
 
 class OrderProductListSerializer(serializers.ListSerializer):
@@ -32,25 +33,16 @@ class OrderSerializer(serializers.ModelSerializer):
     technecian_name = serializers.CharField(source='technecian')
     services_list = ServiceNameSerializer(source='services',many=True, read_only=True) 
     motors_list = MotorSerializer(source='motors', many=True, read_only=True)
-    customer_full_name = serializers.SerializerMethodField()
-    customer_phone = serializers.SerializerMethodField()
+    time = serializers.SerializerMethodField()
+    
 
     class Meta:
         model = Order
-        fields = ['id', 'created_date', 'requested_date', 'technecian_name', 'location', 'services_list',
+        fields = ['id', 'time', 'technecian_name', 'address', 'services_list',
                    'motors_list', 'status', 'wage','expanse' ,'customer_full_name', 'customer_phone']
 
-    def get_customer_full_name(self, obj):
-        if obj.customer:
-            return obj.customer.full_name()
-        else:
-            return None
-
-    def get_customer_phone(self, obj):
-        if obj.customer and obj.customer.user_id.phone:
-            return obj.customer.phonenumber()
-        else:
-            return None
+    def get_time(self,instance):
+	    return datetime2jalali(instance.time).strftime('14%y/%m/%d')    
 
 
 class OrderAcceptSerializer(serializers.Serializer):

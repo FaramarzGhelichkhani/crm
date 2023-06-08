@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load utils %}
 {% block content %}
 
 <section class="text-gray-700 body-font">
@@ -7,12 +7,11 @@
         <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
             <div>
                 <a class="text-gray-500-4xl hover:text-blue-500" >
-                  {{agent.first_name}}  {{agent.last_name}}
+                  {{agent.user_id.full_name}}
                 </a>
             </div>
             <div>
-                <a class="text-gray-500 hover:text-blue-500 text-center"  
-                 href="{% url 'agents:create-recepie' agent.pk %}">صدور گزارش</a>
+
             </div>
         </div>
 
@@ -57,13 +56,15 @@
                                     {{ lead.address }}
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
-                                    {{ lead.problem }}
+                                    {% for service in lead.services.all %}
+                                        {{ service.name }}
+                                    {% endfor %}
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
-                                    {{ lead.total_price_agent }}
+                                    {{ lead.wage|convert_to_persian }}
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
-                                    {{ lead.com }}
+                                    {{ lead.commission|convert_to_persian }} 
                                 </td>
                 
                             </tr>
@@ -74,23 +75,54 @@
 
                         {% endfor %}
                     </tbody>
+                     
+                    <tbody>
+                        {% for trans in transactions %}
+                            <tr class="bg-white">
+                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    {{ trans.time }}
+                                </td>
+                                <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    
+                                </td>
+                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    
+                                </td>
+                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                  
+                                </td>
+                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    واریز
+                                </td>
+                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    {{trans.amount|convert_to_persian}}
+                                </td>
+                
+                            </tr>
+
+                        {% empty %}
+
+                        <p>هیچ واریزی وجود ندارد</p>
+
+                        {% endfor %}
+                    </tbody>
                 </table>
                 <table class="min-w-full divide-y divide-gray-100">
                     <tbody class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-900 uppercase tracking-wider">
+                                جمع کل اجرت دریافتی از مشتری: {{total_wage|convert_to_persian}} تومان 
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-900 uppercase tracking-wider">
+                                جمع کل کمیسیون  : {{total_commisions|convert_to_persian}} تومان
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-900 uppercase tracking-wider">
+                                جمع کل واریزی  : {{total_tr|convert_to_persian}} تومان
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-900 uppercase tracking-wider">
+                                بدهی : {{bedehi|convert_to_persian}} تومان
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                جمع کل اجرت: {{total_tr}} تومان 
-                            </th>
+                           
                         </tr>
                     </tbody>
                 </table>
@@ -104,11 +136,22 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                  بدهی قبلی: {{initial_bedehi|convert_to_persian}}  تومان        
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="min-w-full divide-y divide-gray-100">
+                    <tbody class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                         جمع کل کمیسیون  : {{total_commisions}} تومان
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
+                                  بدهی کل: {{total_bedehi|convert_to_persian}}  تومان        
                             </th>
                         </tr>
                     </tbody>

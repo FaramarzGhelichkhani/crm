@@ -1,5 +1,4 @@
 from django.db import models
-from Order.models import Order
 from EmdadUser.models import Technecian
 
 def Transaction_handle_upload(instance,filename):

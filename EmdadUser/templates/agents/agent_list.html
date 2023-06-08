@@ -59,6 +59,11 @@
                                         {{ agent.balance }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'agents:agent-lead-list-makerecipt' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
+                                            گزارش
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <a href="{% url 'agents:agent-leads-list' agent.pk %}" class="text-indigo-600 hover:text-indigo-900">
                                             سفارش ها
                                         </a>
@@ -79,6 +84,7 @@
                                             واریز+
                                         </a>
                                     </td>
+
                                 </tr>
                             {% empty %}
 

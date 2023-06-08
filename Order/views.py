@@ -9,28 +9,31 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.db import transaction
 from django.db.models import Avg, Sum, Q
+from jalali_date import datetime2jalali
 
 
-# class OrdertListView(generics.ListAPIView,generics.UpdateAPIView,generics.RetrieveAPIView):
+
+
+
+# class OrderListView(generics.ListAPIView,generics.UpdateAPIView,generics.RetrieveAPIView):
 class OrderListView(viewsets.ModelViewSet):
-    queryset = Order.objects.all().order_by('-time')
+    queryset = Order.objects.all().order_by('-time') 
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         
-        if self.request.get_full_path() == '/orders/recommendations/':
+        if self.request.get_full_path() == '/crm/motor/leads/orders/recommendations/':
             return self.queryset.filter(technecian=None,status="در آستانه کنسلی")
-        elif self.request.get_full_path() == '/orders/ongoing/':
+        elif self.request.get_full_path() == '/crm/motor/leads/orders/ongoing/':
             return self.queryset.filter(technecian__user_id=self.request.user, status='در حال انجام')
-            # return self.queryset.filter(status='در حال انجام')
         elif  self.kwargs.get('pk') is None:
             return self.queryset.filter(technecian__user_id=self.request.user).exclude(status__in=['در حال انجام',"در آستانه کنسلی"])  
 
         else:  
             pk = int(self.kwargs['pk'])     
             return self.queryset.\
-                filter(Q(id=pk) )   
+                filter(Q(id=pk) ).filter(technecian__user_id=self.request.user)   
 
     def put(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -72,6 +75,7 @@ class OrderListView(viewsets.ModelViewSet):
 class OrderUpdateView(generics.UpdateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -88,23 +92,32 @@ class OrderUpdateView(generics.UpdateAPIView):
         # Update the instance with the given data
         serializer = self.get_serializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        
+        order =  Order.objects.get(pk=kwargs["pk"])
+        tech_name  =  order.technecian.user_id.full_name()
+        
+        if tech_name == request.user.full_name():
+            serializer.save()
+            # Update the many-to-many relationships of the Order instance
+            if service_pks is not None:
+                instance.services.set(service_pks)
 
-        # Update the many-to-many relationships of the Order instance
-        if service_pks is not None:
-            instance.services.set(service_pks)
+            if motor_pks is not None:
+                instance.motors.set(motor_pks)
 
-        if motor_pks is not None:
-            instance.motors.set(motor_pks)
+            # Return a response with the updated instance data
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response("error", status=status.HTTP_511_NETWORK_AUTHENTICATION_REQUIRED)
 
-        # Return a response with the updated instance data
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        
     
 
 
 
 class OrderAcceptView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     @transaction.atomic
     def post(self, request, order_id):
@@ -139,8 +152,11 @@ class OrderStats(APIView):
         query_set = query_set.filter(technecian__user_id = user)
         sum_wage = query_set.aggregate(Sum('wage'))['wage__sum']
         sum_expanse = query_set.aggregate(Sum('expanse'))['expanse__sum']
-        sum_trans = Transaction.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum']
-        total_credit = sum_trans - sum_wage
+        tech  = Technecian.objects.get(user_id= user)
+        sum_trans = Transaction.objects.filter(technician=tech).aggregate(Sum('amount'))['amount__sum']
+        total_commisions = query_set.aggregate(Order_com__sum=Sum('commission'))
+        total_commisions = 0 if  total_commisions['Order_com__sum'] is None else total_commisions['Order_com__sum']
+        total_credit = sum_trans - total_commisions
         total_recip = sum_expanse + sum_wage
         avg_grade = query_set.aggregate(Avg('grade'))['grade__avg']
         total_number_of_order = query_set.count()
