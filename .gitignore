@@ -4,3 +4,5 @@ data/*.csv
 *.csv
 *.pyc
 *.log
+**/*.cpython-38.pyc
+**/*.cpython-*.pyc
