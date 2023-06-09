@@ -1,14 +1,11 @@
 from django import forms
 from .models import Order, Followup
-# from django.contrib.auth.models import User
+from Emdad.models import Motor, Service
 from EmdadUser.models import CustomUser, Technecian
 from django.contrib.auth.forms import UserCreationForm
 
 class OrderModelForm(forms.ModelForm):
     
-    def __init__(self, *args, **kwargs):
-        super(OrderModelForm, self).__init__(*args, **kwargs)
-
     class Meta:
         model = Order
         fields = (
@@ -25,8 +22,16 @@ class OrderModelForm(forms.ModelForm):
     field_order=['customer_full_name','customer_phone','address','motors','services','technecian'
     ,'comment']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        frequented_services = [ '.','پنچری', 'زنجیر', 'تسمه', 'باطری', 'لاستیک', 'سیم کلاج', 'سیم گاز', 'روشن نمی شود', 'سرویس', 'مغزی و سوییچ', 'چرخ عقب قفل', 'قفل', 'حرکت نمیکند', 'جلوبندی', 'اچارکشی',  'صفحه','موارد دیگر']
+        frequented_motors = [187,111,218,300,122,263,316,64,70,152,34,200,40,3,170,57,256,181,219]
+        self.fields['services'].queryset = Service.objects.filter(name__in=frequented_services)
+        self.fields['motors'].queryset = Motor.objects.filter(id__in=frequented_motors)
 
 
+
+ 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser

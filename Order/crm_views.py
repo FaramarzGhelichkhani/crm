@@ -55,9 +55,8 @@ class DashboardView(LoginRequiredMixin,generic.TemplateView):
         total_income = Transaction.objects.aggregate(total_income=Sum('amount'))
         # commssions
         total_commisions = 0 
-        for row in Order.objects.exclude(technecian__isnull=True).values('technecian').annotate(sumwage=Sum('wage')):
-            tech = Technecian.objects.get(pk=row['technecian'])
-            total_commisions += row['sumwage'] * tech.commission
+        for row in Order.objects.exclude(technecian__isnull=True).values('technecian').annotate(sumcom=Sum('commission')):
+            total_commisions += 0 if row['sumcom'] is None else row['sumcom']
 
         #expands
         total_expend = Expend.objects.all().aggregate(tot=Sum('amount'))
