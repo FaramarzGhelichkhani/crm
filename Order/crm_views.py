@@ -10,7 +10,6 @@ from Transaction.models import Transaction
 from EmdadUser.models import Technecian
 from company.models import Expend
 from datetime import date
-from datetime import datetime
 from jalali_date import datetime2jalali
 from django.db.models import Avg, Sum ,Q
 from Transaction.forms import TransactionFormModel
