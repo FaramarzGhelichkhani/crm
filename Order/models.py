@@ -1,7 +1,7 @@
 from django.db import models
 from EmdadUser.models import Technecian,CustomUser
 from Emdad.models import Service, Motor,Product
-
+from datetime import datetime
 
 class Order(models.Model):
     time   = models.DateTimeField('زمان ایجاد',auto_now_add=True)
@@ -33,14 +33,6 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.pk}" 
 
-
-    def save(self, *args, **kwargs):
-        if self.status == "انجام شد" and self.technecian is not None:
-            commission = int(float(self.wage) * self.technecian.commission)
-            if self.commission != commission:
-                self.commission = commission
-
-        super().save(*args, **kwargs)
 
 
 class Order_Product(models.Model):

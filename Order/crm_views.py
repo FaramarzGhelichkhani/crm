@@ -10,6 +10,7 @@ from Transaction.models import Transaction
 from EmdadUser.models import Technecian
 from company.models import Expend
 from datetime import date
+from datetime import datetime
 from jalali_date import datetime2jalali
 from django.db.models import Avg, Sum ,Q
 from Transaction.forms import TransactionFormModel
@@ -350,6 +351,9 @@ class FollowUpCreateView(LoginRequiredMixin,generic.FormView):
         
         grade_change = lead.grade != followup.grade
         lead.grade = followup.grade
+
+        agent_change = lead.technecian != form.cleaned_data["agent"]
+        lead.technecian = form.cleaned_data["agent"]
         
         total_price_cusotmer_changed = lead.total_price_cusotmer != followup.total_price_cusotmer
         lead.total_price_cusotmer    = followup.total_price_cusotmer
@@ -362,14 +366,30 @@ class FollowUpCreateView(LoginRequiredMixin,generic.FormView):
         
         status_changed = lead.status != form.cleaned_data["status"]
         lead.status = form.cleaned_data["status"]
-        lead.save()
         
 
-      
+        if (lead.status == "انجام شد" and lead.wage == 0) or (lead.status != "انجام شد" and lead.wage > 0) :
+            messages.warning(self.request, "وضعیت سفارش با اجرت مطابقت ندارد. وضعیت انجام شد مستلزم اجرت است و برعکس.")
+            return super(FollowUpCreateView, self).form_invalid(form)
+        
+        lead.save()
+        
+        commission_change = ''
+        if (wage_changed or agent_change) :
+            commission = int((lead.wage) * lead.technecian.commission) if lead.wage != 0  else None
+            if lead.commission != commission :
+                lead.commission = commission
+                lead.save()
+                messages.info(self.request, "کمیسیون این سفارش تغییر یافت.")
+                commission_change= f"کمیسیون {commission} ثبت شد."
+
+               
         
         followup.notes += '\n'
         if grade_change:
             followup.notes +=  'امتیاز عملکرد تغییر یافت. '+ '\n'
+        if agent_change:
+            followup.notes +=  ' کارشناس تغییر یافت. '+ '\n'
         if total_price_cusotmer_changed:
             followup.notes += '.مقدار پرداختی مشتری تغییر یافت' + '\n'
         if wage_changed:
@@ -377,7 +397,9 @@ class FollowUpCreateView(LoginRequiredMixin,generic.FormView):
         if expanse_chnage:
             followup.notes += '.خرجکرد تغییر یافت' + '\n' 
         if status_changed:
-            followup.notes += '.وضعیت سفارش تفییر یافت'         
+            followup.notes += '.وضعیت سفارش تفییر یافت'    + '\n'
+        if commission_change != '':
+            followup.notes += commission_change         
 
         followup.save()
         
@@ -386,10 +408,12 @@ class FollowUpCreateView(LoginRequiredMixin,generic.FormView):
     def get_form_kwargs(self):
         order =  Order.objects.get(pk=self.kwargs["pk"])   
         grade = order.grade
+        tech = order.technecian
         total_expanse_agent = order.expanse
         total_wage_agent = order.wage
         kwargs = super().get_form_kwargs()
         kwargs['initial']['grade'] = grade
+        kwargs['initial']['agent'] = tech
         kwargs['initial']['total_expanse_agent'] = total_expanse_agent
         kwargs['initial']['total_wage_agent'] = total_wage_agent
         kwargs['initial']['status'] = order.status

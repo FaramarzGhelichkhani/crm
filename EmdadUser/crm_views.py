@@ -9,7 +9,7 @@ from Transaction.models import Transaction
 from .models import Technecian
 from .forms import AgentModelForm, UserModelForm, reciptForm
 from django.db.models import Avg, Sum, Q
-from Order.crm_views import get_created_jalali
+from datetime import datetime, timedelta, time
 from jalali_date import datetime2jalali,date2jalali
 
 
@@ -60,7 +60,7 @@ class AgentDetailView(LoginRequiredMixin,generic.DetailView): #OrganisorAndLogin
         total_deposit = 0 if  total_transaction_deposit['Transaction_amount__sum'] is None else total_transaction_deposit['Transaction_amount__sum'] 
         
         total_wage = leads.aggregate(Order_wage__sum=Sum('wage'))["Order_wage__sum"]
-        total_commisions = leads.aggregate(Order_com__sum=Sum('commission'))
+        total_commisions = leads.filter(status="انجام شد").aggregate(Order_com__sum=Sum('commission'))
         total_commisions = 0 if  total_commisions['Order_com__sum'] is None else total_commisions['Order_com__sum']
 
    
@@ -128,11 +128,11 @@ class RecepieListView(LoginRequiredMixin, generic.ListView):# LoginRequiredMixin
     def update_balance(self,agent_id,max_date=None):
 
         if max_date is None:
-            leads = Order.objects.filter(technecian__id=agent_id)
+            leads = Order.objects.filter(technecian__id=agent_id, status="انجام شد")
             transactions = Transaction.objects.filter(technician__id=agent_id)
         else:  
             transactions = Transaction.objects.filter(technician__id=agent_id,time__lt = max_date)
-            leads = Order.objects.filter(technecian__id=agent_id,time__lt = max_date)  
+            leads = Order.objects.filter(technecian__id=agent_id,time__lt = max_date, status="انجام شد")  
                     
         agent = Technecian.objects.get(id = agent_id )
 
@@ -154,19 +154,20 @@ class RecepieListView(LoginRequiredMixin, generic.ListView):# LoginRequiredMixin
     
     
     def get_date_offset(self,offset):
-        from datetime import datetime, timedelta, time
         today = datetime.now()
         date = today - timedelta(days=int(offset))
         return datetime.combine(date.date(), time.min)
     
     def get_queryset(self):
         agentid  = self.kwargs["pk"]
+        gt_time = self.get_date_offset(self.kwargs["gt"])
+        lt_time =  datetime.combine(self.get_date_offset(self.kwargs["lt"]),time.max)
         order_queryset = Order.objects.filter(
         Q(status="انجام شد")&
         Q(technecian__id=agentid) &
-        Q(time__gte=self.get_date_offset(self.kwargs["gt"]))
+        Q(time__gte=gt_time)
         &
-        Q(time__lte=self.get_date_offset(self.kwargs["lt"]))
+        Q(time__lte=lt_time)
         )\
         .order_by('time')
         
@@ -179,12 +180,14 @@ class RecepieListView(LoginRequiredMixin, generic.ListView):# LoginRequiredMixin
         order_queryset  = self.get_queryset() 
         context = super(RecepieListView, self).get_context_data(**kwargs)
         agentqueryset = Technecian.objects.get(id=self.kwargs["pk"])
-        
+        gt_time = self.get_date_offset(self.kwargs["gt"])
+        lt_time =  datetime.combine(self.get_date_offset(self.kwargs["lt"]),time.max)
+
         transaction_quetyset = Transaction.objects.filter(
         Q(technician=agentqueryset.id) &
-        Q(time__gte=self.get_date_offset(self.kwargs["gt"]))
+        Q(time__gte=gt_time)
         &
-        Q(time__lte=self.get_date_offset(self.kwargs["lt"]))
+        Q(time__lte=lt_time)
         )
         
         for trans in transaction_quetyset:
