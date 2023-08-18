@@ -1,0 +1,302 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-12 17:20+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/Emdad/models.py:6
+msgid "name of service"
+msgstr ""
+
+#: apps/Emdad/models.py:7
+msgid "minimum price"
+msgstr ""
+
+#: apps/Emdad/models.py:8
+msgid "maximum price"
+msgstr ""
+
+#: apps/Emdad/models.py:10 apps/Emdad/models.py:35 apps/EmdadUser/models.py:81
+msgid "active"
+msgstr ""
+
+#: apps/Emdad/models.py:11 apps/Emdad/models.py:36 apps/EmdadUser/models.py:82
+msgid "inactive"
+msgstr ""
+
+#: apps/Emdad/models.py:18 apps/Emdad/models.py:42 apps/EmdadUser/models.py:91
+msgid "status"
+msgstr ""
+
+#: apps/Emdad/models.py:20 apps/EmdadUser/models.py:79 apps/Order/models.py:34
+#: apps/Order/models.py:51 apps/Order/models.py:61
+#: apps/Transaction/models.py:13
+msgid "explanation"
+msgstr ""
+
+#: apps/Emdad/models.py:23
+msgid "service"
+msgstr ""
+
+#: apps/Emdad/models.py:24 apps/Order/models.py:9
+msgid "services"
+msgstr ""
+
+#: apps/Emdad/models.py:32
+msgid "city"
+msgstr ""
+
+#: apps/Emdad/models.py:33
+msgid "area"
+msgstr ""
+
+#: apps/Emdad/models.py:46
+msgid "region"
+msgstr ""
+
+#: apps/Emdad/models.py:47
+msgid "regions"
+msgstr ""
+
+#: apps/Emdad/models.py:55
+msgid "company"
+msgstr ""
+
+#: apps/Emdad/models.py:56
+msgid "brand"
+msgstr ""
+
+#: apps/Emdad/models.py:57
+msgid "model"
+msgstr ""
+
+#: apps/Emdad/models.py:58
+msgid "year of construction"
+msgstr ""
+
+#: apps/Emdad/models.py:60
+msgid "injector"
+msgstr ""
+
+#: apps/Emdad/models.py:61
+msgid "carburetoer"
+msgstr ""
+
+#: apps/Emdad/models.py:67
+msgid "engine type"
+msgstr ""
+
+#: apps/Emdad/models.py:71
+msgid "motor"
+msgstr ""
+
+#: apps/Emdad/models.py:72 apps/Order/models.py:10
+msgid "motors"
+msgstr ""
+
+#: apps/Emdad/models.py:79
+msgid "name of product"
+msgstr ""
+
+#: apps/Emdad/models.py:82
+msgid "product"
+msgstr ""
+
+#: apps/Emdad/models.py:83
+msgid "products"
+msgstr ""
+
+#: apps/EmdadUser/models.py:11
+msgid "raw password"
+msgstr ""
+
+#: apps/EmdadUser/models.py:12
+msgid "name"
+msgstr ""
+
+#: apps/EmdadUser/models.py:13
+msgid "last name"
+msgstr ""
+
+#: apps/EmdadUser/models.py:14
+msgid "call number"
+msgstr ""
+
+#: apps/EmdadUser/models.py:15
+msgid "email"
+msgstr ""
+
+#: apps/EmdadUser/models.py:16
+msgid "date joined"
+msgstr ""
+
+#: apps/EmdadUser/models.py:53 apps/EmdadUser/models.py:72
+msgid "user"
+msgstr ""
+
+#: apps/EmdadUser/models.py:54
+msgid "users"
+msgstr ""
+
+#: apps/EmdadUser/models.py:74
+msgid "id card"
+msgstr ""
+
+#: apps/EmdadUser/models.py:75 apps/Order/models.py:11
+msgid "address"
+msgstr ""
+
+#: apps/EmdadUser/models.py:76 apps/Order/models.py:30
+msgid "commission"
+msgstr ""
+
+#: apps/EmdadUser/models.py:77
+msgid "debt"
+msgstr ""
+
+#: apps/EmdadUser/models.py:78
+msgid "time shift"
+msgstr ""
+
+#: apps/EmdadUser/models.py:83
+msgid "bann"
+msgstr ""
+
+#: apps/EmdadUser/models.py:96 apps/EmdadUser/models.py:106
+msgid "technician"
+msgstr ""
+
+#: apps/EmdadUser/models.py:97
+msgid "technicians"
+msgstr ""
+
+#: apps/EmdadUser/models.py:108
+msgid "file name"
+msgstr ""
+
+#: apps/EmdadUser/models.py:116
+msgid "document"
+msgstr ""
+
+#: apps/EmdadUser/models.py:117
+msgid "documents"
+msgstr ""
+
+#: apps/Order/models.py:8 apps/Order/models.py:59 apps/Transaction/models.py:9
+#: apps/company/models.py:6
+msgid "time"
+msgstr ""
+
+#: apps/Order/models.py:12
+msgid "customer call number"
+msgstr ""
+
+#: apps/Order/models.py:13
+msgid "customer name"
+msgstr ""
+
+#: apps/Order/models.py:15
+msgid "working"
+msgstr ""
+
+#: apps/Order/models.py:16
+msgid "done"
+msgstr ""
+
+#: apps/Order/models.py:17
+msgid "cancellation"
+msgstr ""
+
+#: apps/Order/models.py:18
+msgid "canceled"
+msgstr ""
+
+#: apps/Order/models.py:28 apps/Order/models.py:66
+msgid "grade"
+msgstr ""
+
+#: apps/Order/models.py:29
+msgid "wage"
+msgstr ""
+
+#: apps/Order/models.py:31
+msgid "expenses"
+msgstr ""
+
+#: apps/Order/models.py:32
+msgid "The final cost paid by the customer"
+msgstr ""
+
+#: apps/Order/models.py:37
+msgid "order"
+msgstr ""
+
+#: apps/Order/models.py:38
+msgid "orders"
+msgstr ""
+
+#: apps/Order/models.py:49
+msgid "number"
+msgstr ""
+
+#: apps/Order/models.py:50
+msgid "price"
+msgstr ""
+
+#: apps/Order/models.py:64
+msgid "total cost paid by customer"
+msgstr ""
+
+#: apps/Order/models.py:65
+msgid "total wage paid, declered by technician"
+msgstr ""
+
+#: apps/Order/models.py:70
+msgid "followup"
+msgstr ""
+
+#: apps/Order/models.py:71
+msgid "followups"
+msgstr ""
+
+#: apps/Transaction/models.py:11
+msgid "amount transaction"
+msgstr ""
+
+#: apps/Transaction/models.py:19
+msgid "transaction"
+msgstr ""
+
+#: apps/Transaction/models.py:20
+msgid "transactions"
+msgstr ""
+
+#: apps/company/models.py:7
+msgid "amount"
+msgstr ""
+
+#: apps/company/models.py:8
+msgid "title"
+msgstr ""
+
+#: apps/company/models.py:11
+msgid "Expense"
+msgstr ""
+
+#: apps/company/models.py:12
+msgid "Expenses"
+msgstr ""

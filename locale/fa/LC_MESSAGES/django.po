@@ -1,0 +1,321 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-18 00:42+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: apps/Emdad/apps.py:8
+msgid "Emdad"
+msgstr "امداد"
+
+#: apps/Emdad/models.py:6
+msgid "name of service"
+msgstr "نام سرویس"
+
+#: apps/Emdad/models.py:7
+msgid "minimum price"
+msgstr "کمینه قیمت"
+
+#: apps/Emdad/models.py:8
+msgid "maximum price"
+msgstr "بیشینه قیمت"
+
+#: apps/Emdad/models.py:10 apps/Emdad/models.py:35 apps/EmdadUser/models.py:47
+msgid "active"
+msgstr "فعال"
+
+#: apps/Emdad/models.py:11 apps/Emdad/models.py:36 apps/EmdadUser/models.py:48
+msgid "inactive"
+msgstr "غیرفعال"
+
+#: apps/Emdad/models.py:18 apps/Emdad/models.py:42 apps/EmdadUser/models.py:57
+msgid "status"
+msgstr "وضعیت"
+
+#: apps/Emdad/models.py:20 apps/EmdadUser/models.py:45 apps/Order/models.py:41
+#: apps/Order/models.py:57 apps/Order/models.py:70
+#: apps/Transaction/models.py:13
+msgid "explanation"
+msgstr "توضیحات"
+
+#: apps/Emdad/models.py:23
+msgid "service"
+msgstr "سرویس"
+
+#: apps/Emdad/models.py:24 apps/Order/models.py:10
+msgid "services"
+msgstr "خدمات"
+
+#: apps/Emdad/models.py:32
+msgid "city"
+msgstr "شهر"
+
+#: apps/Emdad/models.py:33
+msgid "area"
+msgstr "منطقه یا ناحیه"
+
+#: apps/Emdad/models.py:46
+msgid "region"
+msgstr "منطقه یا ناحیه"
+
+#: apps/Emdad/models.py:47
+msgid "regions"
+msgstr "مناطق تحت پوشش"
+
+#: apps/Emdad/models.py:55 apps/company/apps.py:8
+msgid "company"
+msgstr "کمپانی"
+
+#: apps/Emdad/models.py:56
+msgid "brand"
+msgstr "برند"
+
+#: apps/Emdad/models.py:57
+msgid "model"
+msgstr "مدل"
+
+#: apps/Emdad/models.py:58
+msgid "year of construction"
+msgstr "سال ساخت"
+
+#: apps/Emdad/models.py:60
+msgid "injector"
+msgstr "انژکتور"
+
+#: apps/Emdad/models.py:61
+msgid "carburetoer"
+msgstr "کاربراتور"
+
+#: apps/Emdad/models.py:67
+msgid "engine type"
+msgstr "نوع موتور"
+
+#: apps/Emdad/models.py:71
+msgid "motor"
+msgstr "موتور"
+
+#: apps/Emdad/models.py:72 apps/Order/models.py:11
+msgid "motors"
+msgstr "موتورها"
+
+#: apps/Emdad/models.py:79
+msgid "name of product"
+msgstr "نام قطعه"
+
+#: apps/Emdad/models.py:82
+msgid "product"
+msgstr "لوازم و قطعات"
+
+#: apps/Emdad/models.py:83
+msgid "products"
+msgstr "لوازم و قطعات"
+
+#: apps/EmdadUser/apps.py:8 apps/EmdadUser/models.py:25
+#: apps/EmdadUser/models.py:38
+msgid "user"
+msgstr "کاربر"
+
+#: apps/EmdadUser/models.py:12
+msgid "phone"
+msgstr "شماره تماس "
+
+#: apps/EmdadUser/models.py:14
+msgid "date joined"
+msgstr "تاریخ پیوست"
+
+#: apps/EmdadUser/models.py:26
+msgid "users"
+msgstr "کاربران"
+
+#: apps/EmdadUser/models.py:40
+msgid "id card"
+msgstr "کد ملی"
+
+#: apps/EmdadUser/models.py:41 apps/Order/models.py:12
+msgid "address"
+msgstr "آدرس"
+
+#: apps/EmdadUser/models.py:42 apps/Order/models.py:36
+msgid "commission"
+msgstr "کارمزد"
+
+#: apps/EmdadUser/models.py:43
+msgid "debt"
+msgstr "بدهی"
+
+#: apps/EmdadUser/models.py:44
+msgid "time shift"
+msgstr "شیفت کاری"
+
+#: apps/EmdadUser/models.py:49
+msgid "bann"
+msgstr "تعلیق"
+
+#: apps/EmdadUser/models.py:62 apps/EmdadUser/models.py:72
+msgid "technician"
+msgstr "کارشناس"
+
+#: apps/EmdadUser/models.py:63
+msgid "technicians"
+msgstr "کارشناس ها"
+
+#: apps/EmdadUser/models.py:74
+msgid "file name"
+msgstr "نام فایل"
+
+#: apps/EmdadUser/models.py:82
+msgid "document"
+msgstr "مدارک"
+
+#: apps/EmdadUser/models.py:83
+msgid "documents"
+msgstr "مدارک"
+
+#: apps/Order/apps.py:8 apps/Order/models.py:44
+msgid "order"
+msgstr "سفارش"
+
+#: apps/Order/models.py:9 apps/Order/models.py:67 apps/Transaction/models.py:9
+#: apps/company/models.py:6
+msgid "time"
+msgstr "زمان"
+
+#: apps/Order/models.py:13
+msgid "customer call number"
+msgstr "شماره تماس مشتری"
+
+#: apps/Order/models.py:15
+msgid "customer name"
+msgstr "نام مشتری"
+
+#: apps/Order/models.py:18
+msgid "working"
+msgstr "در حال انجام"
+
+#: apps/Order/models.py:19
+msgid "done"
+msgstr "انجام شد"
+
+#: apps/Order/models.py:20
+msgid "cancellation"
+msgstr "در آستانه کنسلی"
+
+#: apps/Order/models.py:21
+msgid "canceled"
+msgstr "کنسلی قطعی"
+
+#: apps/Order/models.py:31
+#, fuzzy
+#| msgid "status"
+
+msgid "order's status"
+msgstr "وضعیت سفارش"
+
+#: apps/Order/models.py:33 apps/Order/models.py:79
+msgid "grade"
+msgstr "امتیاز عملکرد"
+
+#: apps/Order/models.py:34
+msgid "wage"
+msgstr "اجرت"
+
+#: apps/Order/models.py:37
+msgid "expenses"
+msgstr "خرج کردها"
+
+#: apps/Order/models.py:39
+msgid "The final cost paid by the customer"
+msgstr "هزینه نهایی پرداخت شده توسط مشتری"
+
+#: apps/Order/models.py:45
+msgid "orders"
+msgstr "سفارش ها"
+
+#: apps/Order/models.py:55
+msgid "number"
+msgstr "تعداد"
+
+#: apps/Order/models.py:56
+msgid "price"
+msgstr "قیمت"
+
+#: apps/Order/models.py:76
+msgid "total cost paid by customer"
+msgstr "مبلغ پرداختی اظهار مشتری"
+
+#: apps/Order/models.py:78
+msgid "total wage paid, declered by technician"
+msgstr "اجرت نهایی دریافتی. اظهار تکنسین"
+
+#: apps/Order/models.py:82
+msgid "followup"
+msgstr "پیگیری"
+
+#: apps/Order/models.py:83
+msgid "followups"
+msgstr "پیگیری ها"
+
+#: apps/Transaction/apps.py:8 apps/Transaction/models.py:19
+msgid "transaction"
+msgstr "تراکنش"
+
+#: apps/Transaction/models.py:11
+msgid "amount transaction"
+msgstr "مبلغ تراکنش"
+
+#: apps/Transaction/models.py:20
+msgid "transactions"
+msgstr "تراکنش ها"
+
+#: apps/company/models.py:7
+msgid "amount"
+msgstr "مقدار"
+
+#: apps/company/models.py:8
+msgid "title"
+msgstr ""
+
+#: apps/company/models.py:11
+msgid "Expense"
+msgstr "مخارج"
+
+#: apps/company/models.py:12
+msgid "Expenses"
+msgstr "خرج کردها"
+
+#: crm/settings/internationalization.py:7
+msgid "English"
+msgstr "انگلیسی"
+
+#: crm/settings/internationalization.py:8
+msgid "Farsi"
+msgstr "فارسی"
+
+#~ msgid "raw password"
+#~ msgstr "گذرواژه خام"
+
+#~ msgid "name"
+#~ msgstr "نام"
+
+#~ msgid "last name"
+#~ msgstr "نام خانوادگی"
+
+#~ msgid "call number"
+#~ msgstr "شماره تماس"
+
+#~ msgid "email"
+#~ msgstr "ایمیل"

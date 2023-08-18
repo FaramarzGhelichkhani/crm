@@ -1,1 +1,1 @@
-from djcrm.wsgi import application
+from crm.wsgi import application

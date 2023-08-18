@@ -6,3 +6,9 @@ data/*.csv
 *.log
 **/*.cpython-38.pyc
 **/*.cpython-*.pyc
+__pycache__
+.env
+poetry.lock
+*.json
+.vscode
+.pytest_cache
