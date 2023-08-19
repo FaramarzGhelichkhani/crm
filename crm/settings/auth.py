@@ -10,6 +10,7 @@ CRISPY_TEMPLATE_PACK = 'tailwind'
 
 AUTHENTICATION_BACKENDS = [
     'apps.EmdadUser.backends.CustomUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 AUTH_PASSWORD_VALIDATORS = [
