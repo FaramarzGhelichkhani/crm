@@ -84,21 +84,21 @@
                                     {% endfor %}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ lead.technecian }}
+                                    {{ lead.technician }}
                                 </td>
-                                {% if lead.status ==  'در حال انجام' %}
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(233, 222, 157)">
-                                    {{ lead.status }}
-                                </td>
-                                {% elif  lead.status == 'انجام شد' %}
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(157, 233, 189)">
-                                    {{ lead.status }}
-                                </td>
-                                {% else %}
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ lead.status }}
-                                </td>
-                                {%endif%}
+                                {% if lead.status ==  lead.WORKING %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(238, 214, 77)">
+                                {{ lead.get_status_display_verbose }}
+                            </td>
+                            {% elif  lead.status == lead.DONE %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style="background-color:rgb(157, 233, 189)">
+                                {{ lead.get_status_display_verbose }}
+                            </td>
+                            {% else %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ lead.get_status_display_verbose }}
+                            </td>
+                            {%endif%}
 
                 
                                 <!-- <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

@@ -22,7 +22,7 @@ def customer():
 @pytest.fixture
 def technician(customer):
     tech_data = {
-        'user_id': customer,
+        'user': customer,
         'id_card': '1234567890',
         'address': 'Test Address',
         'commission': 0.2,
@@ -40,7 +40,7 @@ def order(technician):
         address="Test Address",
         customer_phone="1234567890",
         customer_full_name="Test Customer",
-        technecian=technician,
+        technician=technician,
         wage=100,
         comment="Test Comment"
     )
@@ -55,7 +55,7 @@ def test_order_creation(order, service, motor, technician):
     assert order.services.count() == 1
     assert order.motors.count() == 1
     assert order.customer_full_name == "Test Customer"
-    assert order.technecian == technician
+    assert order.technician == technician
     assert order.wage == 100
 
 

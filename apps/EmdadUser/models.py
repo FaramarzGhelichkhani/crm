@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
-
 from apps.EmdadUser.managers import CustomUserManager
 
 
@@ -17,7 +16,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return str(self.phone)
+        return self.get_full_name()
 
     class Meta:
         verbose_name = _('user')
@@ -32,7 +31,7 @@ def technecian_handle_upload(instance, filename):
 
 
 class Technician(models.Model):
-    user_id = models.OneToOneField(
+    user = models.OneToOneField(
         CustomUser, on_delete=models.DO_NOTHING, verbose_name=_('user'))
     id_card = models.CharField(
         _('id card'), max_length=10, null=True, blank=True)
@@ -62,11 +61,11 @@ class Technician(models.Model):
         db_table = 'Technician'
 
     def __str__(self):
-        return f"{self.user_id.first_name} {self.user_id.last_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
 
 
 class Techdoc(models.Model):
-    tech_id = models.ForeignKey(
+    technician = models.ForeignKey(
         Technician, on_delete=models.PROTECT, verbose_name=_('technician'))
     name = models.CharField(
         _('file name'), max_length=150, null=True, blank=True)

@@ -47,10 +47,10 @@
                                 <tr class="bg-white"  {% if agent.balance > 0 %}  style="background-color:rgb(238, 157, 157)" {%endif%}>
 
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ agent.user_id.full_name }}
+                                        {{ agent.user.get_full_name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ agent.user_id.phone }}
+                                        {{ agent.user.phone }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ agent.activation_status }}

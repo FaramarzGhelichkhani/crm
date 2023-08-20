@@ -1,12 +1,12 @@
-from django.contrib.auth.base_user import BaseUserManager
-from phonenumber_field.modelfields import PhoneNumberField
 import phonenumbers
 import random
 import string
+from django.contrib.auth.base_user import BaseUserManager
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 def generate_password(length=6):
-    chars = string.ascii_letters + string.digits  # + string.punctuation
+    chars = string.ascii_letters + string.digits + string.punctuation
     return ''.join(random.choice(chars) for _ in range(length))
 
 

@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-ExpendListView,
-ExpendUpdateView,
-ExpendCreateView,
+    ExpendListView,
+    ExpendUpdateView,
+    ExpendCreateView,
 )
 app_name = 'company'
 

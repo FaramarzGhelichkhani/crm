@@ -26,7 +26,7 @@
                     <span class="ml-auto text-gray-900" >زمان</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
-                    <span class="text-gray-500" >{{ lead.technecian }}</span>
+                    <span class="text-gray-500" >{{ lead.technician }}</span>
                     <span class="ml-auto text-gray-900" >کارشناس</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
@@ -35,11 +35,11 @@
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
                     <span class="text-gray-500">{{ lead.total_price_cusotmer }}</span>
-                    <span class="ml-auto text-gray-900">هزینه نهایی پرداخت شده (مشتری)</span>
+                    <span class="ml-auto text-gray-900">هزینه نهایی پرداخت شده ( اظهارمشتری)</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
                     <span class="text-gray-500">{{lead.wage}}</span>
-                    <span class="ml-auto text-gray-900">اجرت نهایی پرداخت شده (تکنسین)</span>
+                    <span class="ml-auto text-gray-900">اجرت نهایی پرداخت شده (اظهار تکنسین)</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
                     <span class="text-gray-500">{{lead.expanse}}</span>
@@ -50,15 +50,7 @@
                     <span class="ml-auto text-gray-900" >کمیسیون</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
-                    <span class="text-gray-500"> {{ lead.customer_messeg }} </span>
-                    <span class="ml-auto text-gray-900">وضعیت ارسال پیامک به مشتری</span>
-                </div>
-                <div class="flex border-t border-gray-300 py-2">
-                    <span class="text-gray-500">{{ lead.technician_messeg }}</span>
-                    <span class="ml-auto text-gray-900"> وضعیت ارسال پیامک به تکنسین </span>
-                </div>
-                <div class="flex border-t border-gray-300 py-2">
-                    <span class="text-gray-500">{{ lead.status }}</span>
+                    <span class="text-gray-500">{{ lead.get_status_display_verbose }}</span>
                     <span class="ml-auto text-gray-900">وضعیت سفارش</span>
                 </div>
                 {% comment %} <!-- 

@@ -1,6 +1,4 @@
 import pytest
-from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
 from apps.EmdadUser.models import CustomUser, Technician
 
 
@@ -28,7 +26,7 @@ def test_custom_user_creation(user_data):
 @pytest.fixture
 def technician_data(user_data):
     return {
-        'user_id': CustomUser.objects.create(**user_data),
+        'user': CustomUser.objects.create(**user_data),
         'id_card': '1234567890',
         'address': 'Test Address',
         'commission': 0.2,
@@ -44,7 +42,7 @@ def test_technician_creation(technician_data):
     technician = Technician.objects.create(**technician_data)
 
     assert Technician.objects.count() == 1
-    assert technician.user_id.phone == technician_data['user_id'].phone
+    assert technician.user.phone == technician_data['user'].phone
     assert technician.id_card == technician_data['id_card']
     assert technician.address == technician_data['address']
     assert technician.commission == technician_data['commission']

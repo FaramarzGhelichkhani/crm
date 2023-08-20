@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 00:42+0330\n"
+"POT-Creation-Date: 2023-08-20 23:54+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,166 +22,170 @@ msgstr ""
 msgid "Emdad"
 msgstr "امداد"
 
-#: apps/Emdad/models.py:6
+#: apps/Emdad/models.py:7
 msgid "name of service"
 msgstr "نام سرویس"
 
-#: apps/Emdad/models.py:7
+#: apps/Emdad/models.py:8
 msgid "minimum price"
 msgstr "کمینه قیمت"
 
-#: apps/Emdad/models.py:8
+#: apps/Emdad/models.py:9
 msgid "maximum price"
 msgstr "بیشینه قیمت"
 
-#: apps/Emdad/models.py:10 apps/Emdad/models.py:35 apps/EmdadUser/models.py:47
+#: apps/Emdad/models.py:15 apps/Emdad/models.py:37 apps/EmdadUser/models.py:44
 msgid "active"
 msgstr "فعال"
 
-#: apps/Emdad/models.py:11 apps/Emdad/models.py:36 apps/EmdadUser/models.py:48
+#: apps/Emdad/models.py:16 apps/Emdad/models.py:38 apps/EmdadUser/models.py:45
 msgid "inactive"
 msgstr "غیرفعال"
 
-#: apps/Emdad/models.py:18 apps/Emdad/models.py:42 apps/EmdadUser/models.py:57
+#: apps/Emdad/models.py:20 apps/Emdad/models.py:45 apps/EmdadUser/models.py:54
 msgid "status"
 msgstr "وضعیت"
 
-#: apps/Emdad/models.py:20 apps/EmdadUser/models.py:45 apps/Order/models.py:41
-#: apps/Order/models.py:57 apps/Order/models.py:70
+#: apps/Emdad/models.py:22 apps/EmdadUser/models.py:42 apps/Order/models.py:41
+#: apps/Order/models.py:62 apps/Order/models.py:75
 #: apps/Transaction/models.py:13
 msgid "explanation"
 msgstr "توضیحات"
 
-#: apps/Emdad/models.py:23
+#: apps/Emdad/models.py:25
 msgid "service"
 msgstr "سرویس"
 
-#: apps/Emdad/models.py:24 apps/Order/models.py:10
+#: apps/Emdad/models.py:26 apps/Order/models.py:10
 msgid "services"
 msgstr "خدمات"
 
-#: apps/Emdad/models.py:32
+#: apps/Emdad/models.py:34
 msgid "city"
 msgstr "شهر"
 
-#: apps/Emdad/models.py:33
+#: apps/Emdad/models.py:35
 msgid "area"
 msgstr "منطقه یا ناحیه"
 
-#: apps/Emdad/models.py:46
+#: apps/Emdad/models.py:49
 msgid "region"
 msgstr "منطقه یا ناحیه"
 
-#: apps/Emdad/models.py:47
+#: apps/Emdad/models.py:50
 msgid "regions"
 msgstr "مناطق تحت پوشش"
 
-#: apps/Emdad/models.py:55 apps/company/apps.py:8
+#: apps/Emdad/models.py:59 apps/company/apps.py:8
 msgid "company"
 msgstr "کمپانی"
 
-#: apps/Emdad/models.py:56
+#: apps/Emdad/models.py:60
 msgid "brand"
 msgstr "برند"
 
-#: apps/Emdad/models.py:57
+#: apps/Emdad/models.py:61
 msgid "model"
 msgstr "مدل"
 
-#: apps/Emdad/models.py:58
+#: apps/Emdad/models.py:62
 msgid "year of construction"
 msgstr "سال ساخت"
 
-#: apps/Emdad/models.py:60
+#: apps/Emdad/models.py:65
 msgid "injector"
 msgstr "انژکتور"
 
-#: apps/Emdad/models.py:61
+#: apps/Emdad/models.py:66
 msgid "carburetoer"
 msgstr "کاربراتور"
 
-#: apps/Emdad/models.py:67
+#: apps/Emdad/models.py:73
 msgid "engine type"
 msgstr "نوع موتور"
 
-#: apps/Emdad/models.py:71
+#: apps/Emdad/models.py:77
 msgid "motor"
 msgstr "موتور"
 
-#: apps/Emdad/models.py:72 apps/Order/models.py:11
+#: apps/Emdad/models.py:78 apps/Order/models.py:11
 msgid "motors"
 msgstr "موتورها"
 
-#: apps/Emdad/models.py:79
+#: apps/Emdad/models.py:86
 msgid "name of product"
 msgstr "نام قطعه"
 
-#: apps/Emdad/models.py:82
+#: apps/Emdad/models.py:89
 msgid "product"
 msgstr "لوازم و قطعات"
 
-#: apps/Emdad/models.py:83
+#: apps/Emdad/models.py:90
 msgid "products"
 msgstr "لوازم و قطعات"
 
-#: apps/EmdadUser/apps.py:8 apps/EmdadUser/models.py:25
-#: apps/EmdadUser/models.py:38
+#: apps/EmdadUser/apps.py:8 apps/EmdadUser/models.py:22
+#: apps/EmdadUser/models.py:35
 msgid "user"
 msgstr "کاربر"
 
-#: apps/EmdadUser/models.py:12
+#: apps/EmdadUser/forms.py:36
+msgid "start day"
+msgstr "روز شروع"
+
+#: apps/EmdadUser/forms.py:37
+msgid "end day"
+msgstr "روز پایان"
+
+#: apps/EmdadUser/models.py:10
 msgid "phone"
 msgstr "شماره تماس "
 
-#: apps/EmdadUser/models.py:14
-msgid "date joined"
-msgstr "تاریخ پیوست"
-
-#: apps/EmdadUser/models.py:26
+#: apps/EmdadUser/models.py:23
 msgid "users"
 msgstr "کاربران"
 
-#: apps/EmdadUser/models.py:40
+#: apps/EmdadUser/models.py:37
 msgid "id card"
 msgstr "کد ملی"
 
-#: apps/EmdadUser/models.py:41 apps/Order/models.py:12
+#: apps/EmdadUser/models.py:38 apps/Order/models.py:12
 msgid "address"
 msgstr "آدرس"
 
-#: apps/EmdadUser/models.py:42 apps/Order/models.py:36
+#: apps/EmdadUser/models.py:39 apps/Order/models.py:36
 msgid "commission"
 msgstr "کارمزد"
 
-#: apps/EmdadUser/models.py:43
+#: apps/EmdadUser/models.py:40
 msgid "debt"
 msgstr "بدهی"
 
-#: apps/EmdadUser/models.py:44
+#: apps/EmdadUser/models.py:41
 msgid "time shift"
 msgstr "شیفت کاری"
 
-#: apps/EmdadUser/models.py:49
+#: apps/EmdadUser/models.py:46
 msgid "bann"
 msgstr "تعلیق"
 
-#: apps/EmdadUser/models.py:62 apps/EmdadUser/models.py:72
+#: apps/EmdadUser/models.py:59 apps/EmdadUser/models.py:69
 msgid "technician"
 msgstr "کارشناس"
 
-#: apps/EmdadUser/models.py:63
+#: apps/EmdadUser/models.py:60
 msgid "technicians"
 msgstr "کارشناس ها"
 
-#: apps/EmdadUser/models.py:74
+#: apps/EmdadUser/models.py:71
 msgid "file name"
 msgstr "نام فایل"
 
-#: apps/EmdadUser/models.py:82
+#: apps/EmdadUser/models.py:79
 msgid "document"
 msgstr "مدارک"
 
-#: apps/EmdadUser/models.py:83
+#: apps/EmdadUser/models.py:80
 msgid "documents"
 msgstr "مدارک"
 
@@ -189,7 +193,13 @@ msgstr "مدارک"
 msgid "order"
 msgstr "سفارش"
 
-#: apps/Order/models.py:9 apps/Order/models.py:67 apps/Transaction/models.py:9
+#: apps/Order/forms.py:50 apps/Order/forms.py:57 apps/Order/models.py:31
+#, fuzzy
+#| msgid "status"
+msgid "order status"
+msgstr "وضعیت سفارش"
+
+#: apps/Order/models.py:9 apps/Order/models.py:72 apps/Transaction/models.py:9
 #: apps/company/models.py:6
 msgid "time"
 msgstr "زمان"
@@ -202,30 +212,23 @@ msgstr "شماره تماس مشتری"
 msgid "customer name"
 msgstr "نام مشتری"
 
-#: apps/Order/models.py:18
+#: apps/Order/models.py:24
 msgid "working"
 msgstr "در حال انجام"
 
-#: apps/Order/models.py:19
+#: apps/Order/models.py:25
 msgid "done"
 msgstr "انجام شد"
 
-#: apps/Order/models.py:20
+#: apps/Order/models.py:26
 msgid "cancellation"
 msgstr "در آستانه کنسلی"
 
-#: apps/Order/models.py:21
+#: apps/Order/models.py:27
 msgid "canceled"
 msgstr "کنسلی قطعی"
 
-#: apps/Order/models.py:31
-#, fuzzy
-#| msgid "status"
-
-msgid "order's status"
-msgstr "وضعیت سفارش"
-
-#: apps/Order/models.py:33 apps/Order/models.py:79
+#: apps/Order/models.py:33 apps/Order/models.py:84
 msgid "grade"
 msgstr "امتیاز عملکرد"
 
@@ -245,27 +248,27 @@ msgstr "هزینه نهایی پرداخت شده توسط مشتری"
 msgid "orders"
 msgstr "سفارش ها"
 
-#: apps/Order/models.py:55
+#: apps/Order/models.py:60
 msgid "number"
 msgstr "تعداد"
 
-#: apps/Order/models.py:56
+#: apps/Order/models.py:61
 msgid "price"
 msgstr "قیمت"
 
-#: apps/Order/models.py:76
+#: apps/Order/models.py:81
 msgid "total cost paid by customer"
 msgstr "مبلغ پرداختی اظهار مشتری"
 
-#: apps/Order/models.py:78
+#: apps/Order/models.py:83
 msgid "total wage paid, declered by technician"
 msgstr "اجرت نهایی دریافتی. اظهار تکنسین"
 
-#: apps/Order/models.py:82
+#: apps/Order/models.py:87
 msgid "followup"
 msgstr "پیگیری"
 
-#: apps/Order/models.py:83
+#: apps/Order/models.py:88
 msgid "followups"
 msgstr "پیگیری ها"
 
@@ -287,7 +290,7 @@ msgstr "مقدار"
 
 #: apps/company/models.py:8
 msgid "title"
-msgstr ""
+msgstr "عنوان"
 
 #: apps/company/models.py:11
 msgid "Expense"
@@ -304,6 +307,9 @@ msgstr "انگلیسی"
 #: crm/settings/internationalization.py:8
 msgid "Farsi"
 msgstr "فارسی"
+
+#~ msgid "date joined"
+#~ msgstr "تاریخ پیوست"
 
 #~ msgid "raw password"
 #~ msgstr "گذرواژه خام"

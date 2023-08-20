@@ -8,13 +8,10 @@ from django.contrib import admin, messages
 
 def generate_new_password(modeladmin, request, queryset):
     for user in queryset:
-        # Generate a new password
         new_password = generate_password()
         user.set_password(new_password)
-        user.raw_password = new_password
         user.save()
 
-    # Display success message
     message = f"Successfully generated. new password  is {new_password}.\n"
     modeladmin.message_user(request, message, level=messages.SUCCESS)
 

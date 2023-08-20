@@ -18,16 +18,16 @@ class OrderListView(viewsets.ModelViewSet):
     def get_queryset(self):
 
         if self.request.get_full_path() == '/crm/motor/leads/orders/recommendations/':
-            return self.queryset.filter(technecian=None, status="در آستانه کنسلی")
+            return self.queryset.filter(technician=None, status=Order.CANCELLATION)
         elif self.request.get_full_path() == '/crm/motor/leads/orders/ongoing/':
-            return self.queryset.filter(technecian__user_id=self.request.user, status='در حال انجام')
+            return self.queryset.filter(technician__user_id=self.request.user, status=Order.WORKING)
         elif self.kwargs.get('pk') is None:
-            return self.queryset.filter(technecian__user_id=self.request.user).exclude(status__in=['در حال انجام', "در آستانه کنسلی"])
+            return self.queryset.filter(technician__user_id=self.request.user).exclude(status__in=[Order.WORKING, Order.CANCELLATION])
 
         else:
             pk = int(self.kwargs['pk'])
             return self.queryset.\
-                filter(Q(id=pk)).filter(technecian__user_id=self.request.user)
+                filter(Q(id=pk)).filter(technician__user_id=self.request.user)
 
     def put(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -35,12 +35,10 @@ class OrderListView(viewsets.ModelViewSet):
             instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
 
-        # Update services field
         services_data = serializer.validated_data.get('services_list')
         if services_data:
             instance.services_list.set(services_data)
 
-        # Update motors field
         motors_data = serializer.validated_data.get('motors')
         if motors_data:
             instance.motors.set(motors_data)
@@ -69,34 +67,24 @@ class OrderUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
+
         instance = self.get_object()
-
-        # Get the data from the request
         data = request.data
-
-        # Extract the primary keys of the related Service instances
         service_pks = data.pop('services_list', None)
-
-        # Extract the primary keys of the related Motor instances
         motor_pks = data.pop('motors_list', None)
-
-        # Update the instance with the given data
         serializer = self.get_serializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
-
         order = Order.objects.get(pk=kwargs["pk"])
-        tech_name = order.technecian.user_id.full_name()
+        tech_name = order.technician.user.full_name()
 
         if tech_name == request.user.full_name():
             serializer.save()
-            # Update the many-to-many relationships of the Order instance
             if service_pks is not None:
                 instance.services.set(service_pks)
 
             if motor_pks is not None:
                 instance.motors.set(motor_pks)
 
-            # Return a response with the updated instance data
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response("error", status=status.HTTP_511_NETWORK_AUTHENTICATION_REQUIRED)
@@ -109,19 +97,18 @@ class OrderAcceptView(APIView):
     def post(self, request, order_id):
         serializer = OrderAcceptSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.validated_data['technecian_id']
-            # user = self.request.user
+            user = serializer.validated_data['technician_id']
             try:
                 order = Order.objects.select_for_update().get(
-                    id=order_id, technecian=None, status='در آستانه کنسلی')
+                    id=order_id, technician=None, status=Order.CANCELLATION)
             except Order.DoesNotExist:
                 return Response({'error': 'Order not found or already accepted by a technician'}, status=status.HTTP_400_BAD_REQUEST)
             try:
-                technecian = Technician.objects.get(user_id=user)
+                technician = Technician.objects.get(user=user)
             except Technician.DoesNotExist:
                 return Response({'error': 'Technician not found'}, status=status.HTTP_400_BAD_REQUEST)
-            order.technecian = technecian
-            order.status = 'در حال انجام'
+            order.technician = technician
+            order.status = Order.WORKING
             order.save()
             return Response({'success': 'Order accepted successfully'})
         else:
@@ -135,10 +122,10 @@ class OrderStats(APIView):
     def get(self, request):
         query_set = self.queryset
         user = request.user
-        query_set = query_set.filter(technecian__user_id=user)
+        query_set = query_set.filter(technician__user_id=user)
         sum_wage = query_set.aggregate(Sum('wage'))['wage__sum']
         sum_expanse = query_set.aggregate(Sum('expanse'))['expanse__sum']
-        tech = Technician.objects.get(user_id=user)
+        tech = Technician.objects.get(user=user)
         sum_trans = Transaction.objects.filter(
             technician=tech).aggregate(Sum('amount'))['amount__sum']
         total_commisions = query_set.aggregate(
@@ -154,7 +141,6 @@ class OrderStats(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 
-####### order-product ##############################
 class OrderProductCreateView(generics.CreateAPIView):
     queryset = OrderProduct.objects.all()
     serializer_class = OrderProductSerializer
@@ -202,7 +188,6 @@ class OrderProductUpdateView(generics.UpdateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        # Get the updated order products
         updated_order_products = OrderProduct.objects.filter(order=order)
         serializer = self.get_serializer(updated_order_products, many=True)
         return Response(serializer.data)

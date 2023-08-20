@@ -1,12 +1,6 @@
 from .views import OrderListView, OrderUpdateView, OrderProductBulkCreateView, OrderProductListView, OrderAcceptView, OrderStats
-from django.urls import path, include
+from django.urls import path
 from .crm_views import *
-# from rest_framework import routers
-
-# router = routers.DefaultRouter()
-# router.register(r'', OrdertListView)
-# router.register(r'recommendations', RecommendationOrdertListView.as_view())
-
 
 app_name = "leads"
 urlpatterns = [
@@ -34,7 +28,6 @@ urlpatterns = [
     path('today/', TodayLeadListView.as_view(), name='lead-list-today'),
     path('today/?status__exact=<str:status>/',
          TodayLeadListView.as_view(), name='lead-list-today'),
-    # path('nontransactions/', TransactionsLeadListView.as_view(), name='lead-list-nontransactions'),
     path('<int:pk>/', LeadDetailView.as_view(), name='lead-detail'),
     path('<int:pk>/update/', LeadUpdateView.as_view(), name='lead-update'),
     path('<int:pk>/delete/', LeadDeleteView.as_view(), name='lead-delete'),

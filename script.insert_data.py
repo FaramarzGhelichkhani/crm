@@ -43,7 +43,7 @@ print("############################\n user inserrted")
 
 for row in agentreader:
     tech_data = {'id': row['id'],
-                 'user_id': CustomUser.objects.get(pk=row['id']),
+                 'user': CustomUser.objects.get(pk=row['id']),
                  'address': row['address'],
                  'commission': row['weight'],
                  'comment': row['comment'],
@@ -54,7 +54,7 @@ file.close()
 
 
 Technician.objects.bulk_create([Technician(**data) for data in tech])
-print("############################\n technecian inserrted")
+print("############################\n technician inserrted")
 
 
 ##
@@ -64,7 +64,7 @@ leadcsvreader = csv.DictReader(file)
 leadcsvreader = list(leadcsvreader)
 
 ordermap = {'id': 'id', 'time': 'time', 'problem': 'services', 'customer_full_name': 'customer_full_name', 'motor_model': 'motors',
-            'customer_phone': 'customer_phone', 'address': 'address', 'agent_id': 'technecian', 'status': 'status', 'total_price_agent': 'wage'}
+            'customer_phone': 'customer_phone', 'address': 'address', 'agent_id': 'technician', 'status': 'status', 'total_price_agent': 'wage'}
 Orders = []
 servicesset = set()
 motors_set = set()
@@ -89,7 +89,7 @@ leadcsvreader = list(leadcsvreader)
 for lead in leadcsvreader:
     extracted_data = {ordermap[field]: lead[field]
                       for field in lead.keys() if field in ordermap}
-    extracted_data['technecian'] = Technician.objects.get(
+    extracted_data['technician'] = Technician.objects.get(
         pk=lead['agent_id']) if lead['agent_id'] != '' else None
     extracted_data['wage'] = lead['total_price_agent'] if lead['total_price_agent'] != '' else 0
     motors = [Motor.objects.get(brand=extracted_data.pop('motors'))]

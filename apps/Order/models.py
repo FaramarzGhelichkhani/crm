@@ -10,25 +10,25 @@ class Order(models.Model):
     services = models.ManyToManyField(Service, verbose_name=_('services'))
     motors = models.ManyToManyField(Motor, verbose_name=_('motors'))
     address = models.CharField(_('address'), max_length=100)
-    customer_phone = models.CharField(_('customer call number'), max_length=20)
+    customer_phone = models.CharField(_('customer call number'), max_length=11)
     customer_full_name = models.CharField(
         _('customer name'), max_length=100, null=True, blank=True)
-    technecian = models.ForeignKey(
+    technician = models.ForeignKey(
         Technician, on_delete=models.PROTECT, null=True, blank=True)
-    WORKING = _('working')
-    DONE = _('done')
-    CANCELLATION = _('cancellation')
-    CANCELED = _('canceled')
+    WORKING = 'working'
+    DONE = 'done'
+    CANCELLATION = 'cancellation'
+    CANCELED = 'canceled'
 
     status_choices = (
-        ("w", WORKING),
-        ("d", DONE),
-        ('c', CANCELLATION),
-        ("cc", CANCELED),
+        (WORKING,       _('working')),
+        (DONE,          _('done')),
+        (CANCELLATION,  _('cancellation')),
+        (CANCELED,      _('canceled')),
     )
 
     status = models.CharField(
-        _("order's status"), max_length=15, choices=status_choices, default="w")
+        _("order status"), max_length=15, choices=status_choices, default=WORKING)
     grade = models.SmallIntegerField(
         _('grade'), null=True, blank=True, default=5)
     wage = models.PositiveIntegerField(_('wage'), default=0)
@@ -47,6 +47,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
+
+    def get_status_display_verbose(self):
+        for code, label in self.status_choices:
+            if self.status == code:
+                return label
 
 
 class OrderProduct(models.Model):
