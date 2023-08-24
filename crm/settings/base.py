@@ -59,3 +59,5 @@ NUMBER_GROUPING = 3
 ROOT_URLCONF = 'crm.urls'
 WSGI_APPLICATION = 'crm.wsgi.application'
 TAILWIND_APP_NAME = 'theme'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

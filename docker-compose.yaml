@@ -1,7 +1,7 @@
 version: '3'
 services:
   crm:
-    image: crm_motor:v2
+    image: crm_motor:v3
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app

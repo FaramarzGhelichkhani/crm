@@ -6,10 +6,10 @@
 <div class="max-w-lg mx-auto">
 
     <div class="py-5 border-b border-gray-200">
-        <a class="hover:text-blue-500" href="{% url 'transactions-list' %}">Go back to transactions</a>
+        <a class="hover:text-blue-500" href="{% url 'transactions-list' %}">بازگشت به صحفه تراکنش ها</a>
     </div>
 
-    <h1 class="text-4xl text-gray-800">Create a new transactions</h1>
+    <h1 class="text-4xl text-gray-800"></h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}

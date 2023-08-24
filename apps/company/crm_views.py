@@ -41,13 +41,13 @@ class AgentDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(AgentDetailView, self).get_context_data(**kwargs)
         agent = Technician.objects.get(id=self.kwargs["pk"])
-        leads = Order.objects.filter(technecian__id=self.kwargs["pk"])
+        leads = Order.objects.filter(technician__id=self.kwargs["pk"])
 
         total_lead_number = leads.count()
         total_sucess_lead_number = Order.objects.filter(
-            technecian__id=self.kwargs["pk"], status=Order.DONE).count()
+            technician__id=self.kwargs["pk"], status=Order.DONE).count()
         grade_avg = Order.objects.filter(
-            technecian__id=self.kwargs["pk"], status=Order.DONE).aggregate(Avg('grade'))
+            technician__id=self.kwargs["pk"], status=Order.DONE).aggregate(Avg('grade'))
 
         total_transaction_deposit = Transaction.objects.filter(technician__id=self.kwargs["pk"])\
             .aggregate(Transaction_amount__sum=Sum('amount'))
@@ -124,13 +124,13 @@ class RecepieListView(LoginRequiredMixin, generic.ListView):
 
         if max_date is None:
             leads = Order.objects.filter(
-                technecian__id=agent_id, status=Order.DONE)
+                technician__id=agent_id, status=Order.DONE)
             transactions = Transaction.objects.filter(technician__id=agent_id)
         else:
             transactions = Transaction.objects.filter(
                 technician__id=agent_id, time__lt=max_date)
             leads = Order.objects.filter(
-                technecian__id=agent_id, time__lt=max_date, status=Order.DONE)
+                technician__id=agent_id, time__lt=max_date, status=Order.DONE)
 
         agent = Technician.objects.get(id=agent_id)
 
@@ -163,7 +163,7 @@ class RecepieListView(LoginRequiredMixin, generic.ListView):
             self.get_date_offset(self.kwargs["lt"]), time.max)
         order_queryset = Order.objects.filter(
             Q(status=Order.DONE) &
-            Q(technecian__id=agentid) &
+            Q(technician__id=agentid) &
             Q(time__gte=gt_time)
             &
             Q(time__lte=lt_time)

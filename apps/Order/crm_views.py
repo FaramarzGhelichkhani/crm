@@ -11,7 +11,7 @@ from apps.EmdadUser.models import Technician
 from apps.company.models import Expend
 from datetime import date
 from jalali_date import datetime2jalali
-from django.db.models import Avg, Sum, Q
+from django.db.models import Sum, Q
 from apps.Transaction.forms import TransactionFormModel
 from .forms import (
     OrderModelForm,
@@ -106,6 +106,7 @@ class TodayLeadListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         today = date.today()
+        print(datetime.datetime.today())
         if self.kwargs.get("status"):
             status = self.kwargs["status"]
             queryset = Order.objects.filter(status__exact=status, time__year=today.year,
@@ -114,6 +115,10 @@ class TodayLeadListView(LoginRequiredMixin, generic.ListView):
             queryset = Order.objects.filter(
                 time__year=today.year, time__month=today.month, time__day=today.day
             ).order_by('-time')
+
+        print(len(queryset))
+        for lead in queryset:
+            lead.time = get_created_jalali(lead)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -126,13 +131,12 @@ class TodayLeadListView(LoginRequiredMixin, generic.ListView):
         ).exclude(status=Order.CANCELED)
         thresoldleads = Order.objects.filter(status=Order.CANCELLATION,
                                              time__year=today.year, time__month=today.month, time__day=today.day)
-        status = []
-        for s in Order.status_choices:
-            status.append(s[1])
+
         context.update({
             "unassigned_leads": agentqueryset,
             "thresoldleads": thresoldleads,
-            "status": status
+            "status": Order.status_choices
+
         })
         return context
 
@@ -166,14 +170,11 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
                 technician_id__isnull=True
             ).exclude(status=Order.CANCELED)
             thresoldleads = Order.objects.filter(status=Order.CANCELLATION)
-            status = [
-            ]
-            for s in Order.status_choices:
-                status.append(s[1])
+
             context.update({
                 "unassigned_leads": agentqueryset,
                 "thresoldleads": thresoldleads,
-                "status": status
+                "status": Order.status_choices
             })
         return context
 
@@ -404,7 +405,6 @@ class TransactionListView(LoginRequiredMixin, generic.ListView):
             return queryset
 
 
-# OrganisorAndLoginRequiredMixin
 class TransactionCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "transactions/transactions_create.html"
     form_class = TransactionFormModel

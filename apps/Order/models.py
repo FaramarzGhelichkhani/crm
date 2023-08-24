@@ -14,7 +14,7 @@ class Order(models.Model):
     customer_full_name = models.CharField(
         _('customer name'), max_length=100, null=True, blank=True)
     technician = models.ForeignKey(
-        Technician, on_delete=models.PROTECT, null=True, blank=True)
+        Technician, on_delete=models.PROTECT, null=True, blank=True, verbose_name=_('technician'))
     WORKING = 'working'
     DONE = 'done'
     CANCELLATION = 'cancellation'
@@ -76,11 +76,11 @@ class Followup(models.Model):
     user = models.ForeignKey(
         CustomUser, on_delete=models.DO_NOTHING, null=True)
     total_price_cusotmer = models.PositiveIntegerField(
-        '', null=True, blank=True)
+        _('The final cost paid by the customer'), null=True, blank=True)
     total_wage_agent = models.PositiveIntegerField(
-        _('total cost paid by customer'), null=True, blank=True)
-    total_expanse_agent = models.PositiveIntegerField(
         _('total wage paid, declered by technician'), null=True, blank=True)
+    total_expanse_agent = models.PositiveIntegerField(
+        _('total expanse paid, declered by technician'), null=True, blank=True)
     grade = models.SmallIntegerField(_('grade'), null=True, blank=True)
 
     class Meta:

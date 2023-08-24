@@ -6,8 +6,8 @@
     <div class="flex-grow">
         {% for status in status%}
         <h3 class="text-gray-300" style="font-size: 14px;" dir="ltr" >
-            <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-list-today' status %}">
-                {{status}}
+            <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-list-today' status.0 %}">
+                {{status.1}}
             </a> 
         </h3>
         {%endfor%}

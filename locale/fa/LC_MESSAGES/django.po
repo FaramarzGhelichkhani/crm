@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-20 23:54+0330\n"
+"POT-Creation-Date: 2023-08-24 22:02+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,8 +194,6 @@ msgid "order"
 msgstr "سفارش"
 
 #: apps/Order/forms.py:50 apps/Order/forms.py:57 apps/Order/models.py:31
-#, fuzzy
-#| msgid "status"
 msgid "order status"
 msgstr "وضعیت سفارش"
 
@@ -240,7 +238,7 @@ msgstr "اجرت"
 msgid "expenses"
 msgstr "خرج کردها"
 
-#: apps/Order/models.py:39
+#: apps/Order/models.py:39 apps/Order/models.py:79
 msgid "The final cost paid by the customer"
 msgstr "هزینه نهایی پرداخت شده توسط مشتری"
 
@@ -257,12 +255,12 @@ msgid "price"
 msgstr "قیمت"
 
 #: apps/Order/models.py:81
-msgid "total cost paid by customer"
-msgstr "مبلغ پرداختی اظهار مشتری"
-
-#: apps/Order/models.py:83
 msgid "total wage paid, declered by technician"
 msgstr "اجرت نهایی دریافتی. اظهار تکنسین"
+
+#: apps/Order/models.py:83
+msgid "total expanse paid, declered by technician"
+msgstr "خرچکرد نهایی دریافتی. اظهار تکنسین"
 
 #: apps/Order/models.py:87
 msgid "followup"
@@ -307,6 +305,9 @@ msgstr "انگلیسی"
 #: crm/settings/internationalization.py:8
 msgid "Farsi"
 msgstr "فارسی"
+
+#~ msgid "total cost paid by customer"
+#~ msgstr "مبلغ پرداختی اظهار مشتری"
 
 #~ msgid "date joined"
 #~ msgstr "تاریخ پیوست"
